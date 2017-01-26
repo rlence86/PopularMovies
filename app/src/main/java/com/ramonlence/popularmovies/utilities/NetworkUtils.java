@@ -3,7 +3,6 @@ package com.ramonlence.popularmovies.utilities;
 import android.net.Uri;
 import android.util.Log;
 
-import com.ramonlence.popularmovies.FetchMoviesTask;
 import com.ramonlence.popularmovies.MainActivity;
 
 import java.io.IOException;
@@ -23,21 +22,12 @@ public class NetworkUtils {
     private static final String MOVIES_BASE_URL =
             "http://api.themoviedb.org/3/movie/";
 
-    private static final String PATH_POPULAR = "popular";
-    private static final String PATH_RATED = "top_rated";
-
-    private static final String PRIVATE_AUTH_KEY = "addyourkeyhere";
+    private static final String PRIVATE_AUTH_KEY = "putyoursecretkeyhere";
 
     private static final String format = "json";
 
 
-    public static URL buildUrl(int selectedOption) {
-        String queryPath = "";
-        if(MainActivity.POPULAR_OPTION == selectedOption){
-            queryPath = PATH_POPULAR;
-        } else if(MainActivity.RATED_OPTION == selectedOption){
-            queryPath = PATH_RATED;
-        }
+    public static URL buildUrl(String queryPath) {
         if(queryPath != "") {
             Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
                     .appendPath(queryPath)
