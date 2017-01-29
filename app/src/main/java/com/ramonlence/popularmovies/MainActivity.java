@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,8 +45,8 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
 
         mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
 
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        GridLayoutManager layoutManager
+                = new GridLayoutManager(MainActivity.this, 2);
 
         mRecyclerView.setLayoutManager(layoutManager);
 
@@ -60,6 +63,10 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
 
     private void loadPopularMovies(){
         new FetchMoviesTask().execute(POPULAR_OPTION);
+    }
+
+    private void loadTopRatedMovies(){
+        new FetchMoviesTask().execute(RATED_OPTION);
     }
 
     public void onClick(Movie selectedMovie){
@@ -114,6 +121,25 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
 
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemThatWasClickedId = item.getItemId();
+        if (itemThatWasClickedId == R.id.menu_popular) {
+            loadPopularMovies();
+            return true;
+        } else if(itemThatWasClickedId == R.id.menu_toprated) {
+            loadTopRatedMovies();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
