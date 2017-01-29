@@ -22,7 +22,9 @@ public class NetworkUtils {
     private static final String MOVIES_BASE_URL =
             "http://api.themoviedb.org/3/movie/";
 
-    private static final String PRIVATE_AUTH_KEY = "yourapikeyhere";
+    private static final String MOVIES_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500/";
+
+    private static final String PRIVATE_AUTH_KEY = "youapikeyhere";
 
     private static final String format = "json";
 
@@ -32,6 +34,27 @@ public class NetworkUtils {
             Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
                     .appendPath(queryPath)
                     .appendQueryParameter("api_key", PRIVATE_AUTH_KEY)
+                    .build();
+
+            URL url = null;
+            try {
+                url = new URL(builtUri.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            Log.v(TAG, "Built URI " + url);
+
+            return url;
+        } else {
+            return null;
+        }
+    }
+
+    public static URL buildImageUrl(String imagePath){
+        if(imagePath != "") {
+            Uri builtUri = Uri.parse(MOVIES_IMAGE_BASE_URL).buildUpon()
+                    .appendEncodedPath(imagePath)
                     .build();
 
             URL url = null;

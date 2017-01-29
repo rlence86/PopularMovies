@@ -5,10 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ramonlence.popularmovies.entities.Movie;
+import com.ramonlence.popularmovies.utilities.NetworkUtils;
+import com.squareup.picasso.Picasso;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +43,9 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movie movieInPosition = mMoviesData.get(position);
-        holder.mViewData.setText(movieInPosition.getOriginal_title());
+        Context context = holder.mViewPoster.getContext();
+        URL imageUrl = NetworkUtils.buildImageUrl(movieInPosition.getPoster_path());
+        Picasso.with(context).load(imageUrl.toString()).into(holder.mViewPoster);
     }
 
     @Override
@@ -59,10 +65,10 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView mViewData;
+        private ImageView mViewPoster;
         public MovieViewHolder(View view){
             super(view);
-            mViewData = (TextView) view.findViewById(R.id.movie_data);
+            mViewPoster = (ImageView) view.findViewById(R.id.movie_poster_in_single);
             view.setOnClickListener(this);
         }
 
