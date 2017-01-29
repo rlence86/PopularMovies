@@ -22,7 +22,7 @@ public class NetworkUtils {
     private static final String MOVIES_BASE_URL =
             "http://api.themoviedb.org/3/movie/";
 
-    private static final String PRIVATE_AUTH_KEY = "putyoursecretkeyhere";
+    private static final String PRIVATE_AUTH_KEY = "yourapikeyhere";
 
     private static final String format = "json";
 
