@@ -60,7 +60,11 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
 
+        int gridColsNumber = context.getResources()
+                .getInteger(R.integer.number_cols);
+
         View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
+        view.getLayoutParams().height = (int) (parent.getWidth() / gridColsNumber * 1.5f);
         return new MovieViewHolder(view);
     }
 

@@ -2,17 +2,16 @@ package com.ramonlence.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ramonlence.popularmovies.entities.Movie;
 import com.ramonlence.popularmovies.utilities.MovieReaderFromJson;
@@ -45,10 +44,8 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
 
         mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
 
-        GridLayoutManager layoutManager
-                = new GridLayoutManager(MainActivity.this, 2);
-
-        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, getResources()
+                .getInteger(R.integer.number_cols)));
 
         mRecyclerView.setHasFixedSize(true);
 
