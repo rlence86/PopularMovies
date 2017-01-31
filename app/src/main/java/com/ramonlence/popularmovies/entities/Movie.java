@@ -1,10 +1,12 @@
 package com.ramonlence.popularmovies.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by ramon on 25/1/17.
  */
 
-public class Movie {
+public class Movie implements Serializable {
     private String original_title;
     private String poster_path;
     private String overview;

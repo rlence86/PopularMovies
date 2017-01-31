@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
         Context context = MainActivity.this;
         Class destinationActivity = SingleMovie.class;
         Intent startChildActivityIntent = new Intent(context, destinationActivity);
-        startChildActivityIntent.putExtra(Intent.EXTRA_TEXT, selectedMovie.getOriginal_title());
+        startChildActivityIntent.putExtra("SelectedMovie", selectedMovie);
         startActivity(startChildActivityIntent);
     }
 
