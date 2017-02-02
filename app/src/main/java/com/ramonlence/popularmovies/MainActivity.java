@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
     public static final int RATED_OPTION = 2;
     private static final String PATH_POPULAR = "popular";
     private static final String PATH_RATED = "top_rated";
-    private ArrayList<Movie> loadedMovies;
 
     private MoviePosterAdapter mPosterAdapter;
     private RecyclerView mRecyclerView;
@@ -58,14 +58,40 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
         loadPopularMovies();
     }
 
+    /**
+     * Shows error message and hides mRecyclerView
+     */
+    private void showError() {
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        mErrorMessageDisplay.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Hides error message and shows mRecyclerView
+     */
+    private void showMoviesPoster(){
+        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Loads popular movies
+     */
     private void loadPopularMovies(){
         new FetchMoviesTask().execute(POPULAR_OPTION);
     }
 
+    /**
+     * Loads top rated movies
+     */
     private void loadTopRatedMovies(){
         new FetchMoviesTask().execute(RATED_OPTION);
     }
 
+    /**
+     * Starts child activity when click on any Movie Poster
+     * @param selectedMovie
+     */
     public void onClick(Movie selectedMovie){
         Context context = MainActivity.this;
         Class destinationActivity = SingleMovie.class;
@@ -74,10 +100,14 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
         startActivity(startChildActivityIntent);
     }
 
+    /**
+     * FetchMoviesTask loads data from the API in background
+     */
     public class FetchMoviesTask extends AsyncTask<Integer, Integer, ArrayList<Movie>> {
 
         @Override
         protected void onPreExecute() {
+            mProgressBar.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -112,10 +142,12 @@ public class MainActivity extends AppCompatActivity implements MoviePosterAdapte
 
         @Override
         protected void onPostExecute(ArrayList<Movie> movies) {
+            mProgressBar.setVisibility(View.INVISIBLE);
             if (movies != null) {
                 mPosterAdapter.setMoviesData(movies);
+                showMoviesPoster();
             } else {
-
+                showError();
             }
         }
     }

@@ -3,8 +3,6 @@ package com.ramonlence.popularmovies.utilities;
 import android.net.Uri;
 import android.util.Log;
 
-import com.ramonlence.popularmovies.MainActivity;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -22,9 +20,9 @@ public class NetworkUtils {
     private static final String MOVIES_BASE_URL =
             "http://api.themoviedb.org/3/movie/";
 
-    private static final String MOVIES_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w780/";
+    private static final String MOVIES_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
 
-    private static final String PRIVATE_AUTH_KEY = "yourapikeyhere";
+    private static final String PRIVATE_AUTH_KEY = "YourApiKeyHere";
 
 
     public static URL buildUrl(String queryPath) {
@@ -49,9 +47,16 @@ public class NetworkUtils {
         }
     }
 
-    public static URL buildImageUrl(String imagePath){
-        if(imagePath != "") {
+    public static URL buildImageUrl(String imagePath, String size){
+        if(imagePath != "" && size !="") {
+            String imageFolder = "";
+            if("normal"==size){
+                imageFolder = "w780";
+            } else if("small"==size){
+                imageFolder = "w342";
+            }
             Uri builtUri = Uri.parse(MOVIES_IMAGE_BASE_URL).buildUpon()
+                    .appendPath(imageFolder)
                     .appendEncodedPath(imagePath)
                     .build();
 

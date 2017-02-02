@@ -1,10 +1,10 @@
 package com.ramonlence.popularmovies;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.ramonlence.popularmovies.entities.Movie;
@@ -39,7 +39,7 @@ public class SingleMovie extends AppCompatActivity {
             mMovieSynopsis.setText(movieToShow.getOverview());
             mUserRating.setText(movieToShow.getVote_average().toString());
             mReleaseDate.setText(movieToShow.getRelease_date());
-            URL imageUrl = NetworkUtils.buildImageUrl(movieToShow.getPoster_path());
+            URL imageUrl = NetworkUtils.buildImageUrl(movieToShow.getPoster_path(),"small");
             Picasso.with(mPosterView.getContext()).load(imageUrl.toString()).into(mPosterView);
         }
     }
